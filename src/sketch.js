@@ -21,7 +21,7 @@
 function setup() {
   // Param args
   params = Object.assign({
-    bg: [0, 0, 0],
+    bg: '#1a1a1a',
     colors: ['#ffffff', '#ff628c', '#FF9D00', '#fad000', '#2ca300', '#2EC4B6', '#5D37F0'],
     pixelRatio: .99
   }, getURLParams())
@@ -75,6 +75,27 @@ function draw() {
   noStroke()
   fill('#f70203')
   rect(width / 2 + 10, 0, width, height)
+  noiseDetail(5, .62)
+  loadPixels()
+  background(0)
+  xoff = 0
+  yoff = 0
+  for (let x = width / 2 + 110; x < width; x++) {
+    xoff = 0
+    for (let y = 0; y < height - height / 6; y++) {
+      xoff += .05
+      let i = (x + y * width) * 4
+      let r = noise(xoff, yoff) * 50 + 205
+      pixels[i + 0] = r
+      pixels[i + 1] = 2
+      pixels[i + 2] = 3
+      pixels[i + 3] = 255
+    }
+    yoff += 0.05
+  }
+  updatePixels()
+
+  // Red rectangle fray
   loadPixels()
   for (let y = 0; y < height - height / 6; y++) {
     noise(1, y) > .5 && set(109 + width / 2, y, color('#f70203'))
@@ -82,20 +103,22 @@ function draw() {
   }
   updatePixels()
 
+  // Divider stripe
+  fill(255, 255, 255, 50)
+  rect(width / 2 + 10, height / 1.5, width, 10)
+  
   // Orange bottom
   noStroke()
   fill('#fe5d01')
   rect(width / 2 + 10, height - height / 6, width, height)
+
+  // Orange fray
   loadPixels()
   for (let y = height - height / 6; y < windowHeight; y++) {
     noise(1, y) > .5 && set(109 + width / 2, y, color('#fe5d01'))
     noise(1.3, y) > .5 && set(108 + width / 2, y, color('#a34d1c'))
   }
   updatePixels()
-
-  // Divider stripe
-  fill(255, 255, 255, 50)
-  rect(width / 2 + 10, height / 1.5, width, 10)
 }
 
 /**
