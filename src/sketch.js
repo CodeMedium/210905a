@@ -75,11 +75,23 @@ function draw() {
   noStroke()
   fill('#f70203')
   rect(width / 2 + 10, 0, width, height)
+  loadPixels()
+  for (let y = 0; y < height - height / 6; y++) {
+    noise(1, y) > .5 && set(109 + width / 2, y, color('#f70203'))
+    noise(1.3, y) > .5 && set(108 + width / 2, y, color('#b01314'))
+  }
+  updatePixels()
 
   // Orange bottom
   noStroke()
   fill('#fe5d01')
   rect(width / 2 + 10, height - height / 6, width, height)
+  loadPixels()
+  for (let y = height - height / 6; y < windowHeight; y++) {
+    noise(1, y) > .5 && set(109 + width / 2, y, color('#fe5d01'))
+    noise(1.3, y) > .5 && set(108 + width / 2, y, color('#a34d1c'))
+  }
+  updatePixels()
 
   // Divider stripe
   fill(255, 255, 255, 50)
