@@ -37,6 +37,7 @@ function setup() {
 function draw() {
   resizeCanvas(windowWidth, windowHeight)
   background(params.bg)
+  noiseSeed(frameCount)
   
   // Blackspace
   // Randomly draw a white pixel across entire canvas
@@ -53,9 +54,16 @@ function draw() {
 
   translate(100, 0)
   // White vertical line
-  strokeWeight(3)
-  stroke(220, 220, 220)
-  line(width / 2, 0, width / 2, height / 1.5)
+  loadPixels()
+  noiseDetail(1.5, 1)
+  for (let y = 0; y < height / 1.5; y++) {
+    let a = noise(y) * 255
+    noise(y) > .5 && set(100 + width / 2 - 2, y, color(a, a, a))
+    set(99 + width / 2, y, color(255, 255, 255))
+    set(100 + width / 2, y, color(255, 255, 255))
+    noise(y + 100) > .5 && set(100 + width / 2 + 1, y, color(a, a, a))
+  }
+  updatePixels()
 
   // Red L line
   strokeWeight(1)
