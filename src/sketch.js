@@ -21,7 +21,7 @@
 function setup() {
   // Param args
   params = Object.assign({
-    bg: '#1a1a1a',
+    bg: '#050505',
     colors: ['#ffffff', '#ff628c', '#FF9D00', '#fad000', '#2ca300', '#2EC4B6', '#5D37F0'],
     pixelRatio: .99
   }, getURLParams())
@@ -105,6 +105,16 @@ function draw() {
   }
   updatePixels()
 
+  // Noisy red/orange divider
+  beginShape()
+  stroke(245, 91, 3)
+  strokeWeight(10)
+  for (let x = width / 2 + 15; x < width; x++) {
+    let y = height - height / 6 - noise(x / 100) * 10 + 5
+    vertex(x, y)
+  }
+  endShape()
+
   // Red rectangle fray
   loadPixels()
   for (let y = 0; y < height - height / 6; y++) {
@@ -113,6 +123,7 @@ function draw() {
     noise(1.5, y) > .5 && set(107 + width / 2, y, color('#751a1a'))
   }
   updatePixels()
+  
   // Orange fray
   loadPixels()
   for (let y = height - height / 6; y < windowHeight; y++) {
@@ -123,8 +134,15 @@ function draw() {
   updatePixels()
 
   // Divider stripe
-  fill(255, 255, 255, 50)
-  rect(width / 2 + 10, height / 1.5, width, 10)
+  noStroke()
+  beginShape()
+  stroke(255, 255, 255, 80)
+  strokeWeight(10)
+  for (let x = width / 2 + 15; x < width; x++) {
+    let y = height / 1.5 - noise(x / 100) * 10 + 5
+    vertex(x, y)
+  }
+  endShape()
 }
 
 /**
